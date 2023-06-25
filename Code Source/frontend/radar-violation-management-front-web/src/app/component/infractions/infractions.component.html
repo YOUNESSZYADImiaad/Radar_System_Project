@@ -1,0 +1,99 @@
+<div class="d-flex align-items-center m-2">
+  <h4 ><b>All Infractions</b></h4>
+</div>
+
+<ng-template #errors>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <span class="fas fa-bullhorn me-1"></span>
+    <strong>{{ errMessage }}</strong>
+    <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</ng-template>
+
+<!-- Table -->
+
+<div class="row"  *ngIf="infractions; else errors">
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+              <tr>
+                <th class="border-bottom" scope="col">id</th>
+                <th class="border-bottom" scope="col">Date</th>
+                <th class="border-bottom" scope="col">Car Owner</th>
+                <th class="border-bottom" scope="col">Amount</th>
+                <th class="border-bottom" scope="col">Details</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let i of infractions">
+                <td>{{i.id}}</td>
+                <td>{{i.date | date:'yy-MM-dd  [HH:mm:ss]' }}</td>
+                <td>{{i.vehicle.owner.name}}</td>
+                <td>{{i.infractionAmount}} Dirhams</td>
+                <td>
+                  <a (click)="showInfraction(i)" data-bs-toggle="tooltip" title="Detail Infraction" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-ticket-detailed-fill" viewBox="0 0 16 16">
+                      <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5Zm4 1a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5Zm0 5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5ZM4 8a1 1 0 0 0 1 1h6a1 1 0 1 0 0-2H5a1 1 0 0 0-1 1Z"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <nav aria-label="Page navigation example" class="m-3">
+              <ul class="pagination pagination-sm">
+                <li class="page-item">
+                  <a class="page-link" aria-label="Previous" (click)="previousPage()" >
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item" >
+                  <p class="page-link" >Page {{ currentPage + 1 }} of {{ totalPages }}</p>
+                <li class="page-item">
+                  <a class="page-link" aria-label="Next" (click)="nextPage()">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+        </div>
+  <div class="col-12 col-xl-4">
+    <div class="modal" tabindex="-1" id="exampleModal" *ngIf="isVehicleInfoVisible">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">infraction Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h5>Car infos :</h5>
+            <b class="text-primary">Matriculate : </b>
+            <b>{{selectedVehicleInfraction.regestrationNumber| slice:0:15 }} </b><br/>
+            <b class="text-primary">Brand : </b> {{selectedVehicleInfraction.brand}} <br/>
+            <b class="text-primary">Model : </b> {{selectedVehicleInfraction.model}}<br/>
+            <b class="text-primary">Fiscal Power : </b> {{selectedVehicleInfraction.fiscalPower}}<br/>
+            <hr>
+            <h5>Owner infos :</h5>
+            <b class="text-primary">Full Name : </b>
+            <b>{{selectedVehicleInfraction.owner.name}}  </b><br/>
+            <b class="text-primary">Birth Date : </b> {{selectedVehicleInfraction.owner.birthDate| date:'yyyy-MM-dd' }} <br/>
+            <b class="text-primary">Email : </b> {{selectedVehicleInfraction.owner.email}}<br/>
+            <hr>
+            <h5>Radar infos :</h5>
+            <b class="text-primary">Radar Name : </b><b> {{selectedRadarInfraction.name}}</b><br/>
+            <b class="text-primary">Max Speed : </b> {{selectedRadarInfraction.maxSpeed}} km/h<br/>
+            <b class="text-primary">Longitude : </b> {{selectedRadarInfraction.longitude}}<br/>
+            <b class="text-primary">Latitude : </b> {{selectedRadarInfraction.latitude}}<br/>
+            <hr>
+            <h5 class="text-danger">Amount:</h5>
+            <h2 class="fw-bolder text-danger">{{ selectedInfraInfraction.infractionAmount }} Dirhams</h2>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

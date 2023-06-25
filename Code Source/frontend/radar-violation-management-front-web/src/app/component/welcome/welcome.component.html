@@ -1,0 +1,153 @@
+<div class="container-lg">
+<h1>Welcome,<span style="color: #080"> {{authenticatUser.authenticatUser!.username}} </span>To Radar System</h1>
+<div class="display">
+  <div class="scanner__wrapper">
+    <div class="scanner"></div>
+  </div>
+  <div class="ping" style="top: 64%; left: 64%; --delay: 9;">
+    <div class="ping__dot"></div>
+    <div class="ping__caption">Radar N13</div>
+  </div>
+  <div class="ping" style="top: 32%; left: 32%; --delay: 4;">
+    <div class="ping__dot"></div>
+    <div class="ping__caption">Radar N12</div>
+  </div>
+  <div class="ping" style="top: 25%; left: 75%; --delay: 6;">
+    <div class="ping__dot"></div>
+    <div class="ping__caption">Radar N11</div>
+  </div>
+</div>
+</div>
+<style>
+  body {
+    padding: 0;
+    margin: 0;
+    background-color: #ede4e4;
+    font-family: sans-serif;
+  }
+
+  .display {
+    background-image: linear-gradient(#000, #040, #020);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 60vh;
+    height: 60vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3), 0 0 5px rgba(0, 128, 0, 0.3),
+    inset 0 0 5px rgba(255, 255, 255, 0.3), inset 0 0 5px rgba(0, 128, 0, 0.3);
+  }
+
+  .scanner__wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    clip-path: circle();
+  }
+
+  .scanner {
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    background-image: linear-gradient(90deg,
+    rgba(255, 255, 255, 0.3),
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0));
+    top: 25%;
+    left: 25%;
+    transform: rotateZ(0deg) translate(50%, 50%);
+    clip-path: polygon(0 0, 0% 0%, 100% 100%, 0% 100%);
+    animation: scanner 1s linear infinite;
+  }
+
+  @keyframes scanner {
+    from {
+      transform: rotateZ(0deg) translate(50%, 50%);
+    }
+
+    to {
+      transform: rotateZ(360deg) translate(50%, 50%);
+    }
+  }
+
+  .ping {
+    position: absolute;
+    cursor: pointer;
+  }
+
+  .ping__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #0f0;
+    cursor: pointer;
+    transition: 300ms ease-in-out;
+    animation: ping__dot 1s linear infinite;
+    animation-delay: calc(var(--delay) * 100ms);
+  }
+
+  @keyframes ping__dot {
+    from {
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 1), 0 0 0 4px rgba(0, 255, 0, 1),
+      0 0 0 6px rgba(0, 0, 0, 1), 0 0 0 8px rgba(0, 255, 0, 0.5),
+      0 0 4px 10px rgba(0, 255, 0, 1);
+    }
+
+    to {
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0), 0 0 0 4px rgba(0, 255, 0, 0),
+      0 0 0 6px rgba(0, 0, 0, 0), 0 0 0 8px rgba(0, 255, 0, 0),
+      0 0 4px 10px rgba(0, 255, 0, 0);
+    }
+  }
+
+  .ping__caption {
+    position: relative;
+    border: 2px dotted #060;
+    padding: 8px;
+    color: #080;
+    display: inline-block;
+    transition: 300ms ease-in-out;
+    transform: scale(0, 0) translate(48px, -48px);
+    transform-origin: left;
+    cursor: pointer;
+  }
+
+  .ping:hover .ping__caption {
+    transform: scale(1, 1) translate(48px, -48px);
+  }
+
+  .ping__caption:hover {
+    color: rgba(255, 255, 255, 0.6);
+    text-shadow: 0 0 2px rgba(0, 255, 0, 0.3);
+  }
+
+  .ping__caption:active {
+    outline: 2px dotted #060;
+    outline-offset: 2px;
+  }
+
+  .ping__caption::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 128, 0, 0.3);
+    z-index: -1;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: 300ms ease-in-out;
+  }
+
+  .ping__caption:hover::after {
+    transform: scaleX(1);
+  }
+</style>

@@ -1,0 +1,75 @@
+<div class="d-flex align-items-center m-2">
+  <h4><b>Owners</b></h4>
+</div>
+
+<ng-template #errors>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <span class="fas fa-bullhorn me-1"></span>
+    <strong>{{ errMessage }}</strong>
+    <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</ng-template>
+
+<div class="row"  *ngIf="vehicles; else errors">
+  <div class="table-responsive" *ngIf="isOwnerInfoVisible">
+    <table class="table align-items-center table-flush">
+      <thead class="thead-light">
+      <tr>
+        <th class="border-bottom" scope="col">Full Name</th>
+        <th class="border-bottom" scope="col">Email</th>
+        <th class="border-bottom" scope="col">Birth Date</th>
+        <th class="border-bottom" scope="col">Car Matriculate</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let v of vehicles">
+        <th class="fw-bolder text-black">{{v.owner.name}}</th>
+        <td class="fw-bolder text-black">{{v.owner.email}}</td>
+        <td class="fw-bolder text-black">{{v.owner.birthDate}}</td>
+        <th class="fw-bolder text-primary">{{v.regestrationNumber| slice:0:15 }}</th>
+      </tr>
+
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example" class="m-3">
+      <ul class="pagination pagination-sm">
+        <li class="page-item">
+          <a (click)="previousPage()" aria-label="Previous" class="page-link">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <p class="page-link">Page {{ currentPage + 1 }} of {{ totalPages }}</p>
+        <li class="page-item">
+          <a (click)="nextPage()" aria-label="Next" class="page-link">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div *ngIf="isOwnerInfoVisible" >
+    <div class="modal" tabindex="-1" id="exampleModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Owner Informations</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <b class="text-primary">Full Name : </b><br/>
+            <b>  {{ selectedVehicleOwner.name }} </b><br/><br/>
+            <b class="text-primary">Email : </b><br/>
+            <b>{{ selectedVehicleOwner.email }}</b><br/><br/>
+            <b class="text-primary">Birth Date : </b><br/>
+            <b>{{ selectedVehicleOwner.birthDate | date:'yyyy-MM-dd' }}</b>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

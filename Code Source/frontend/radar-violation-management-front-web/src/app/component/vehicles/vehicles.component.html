@@ -1,0 +1,85 @@
+<div class="d-flex align-items-center m-2">
+  <h4><b>Vehicles & Owners</b></h4>
+</div>
+
+<ng-template #errors>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <span class="fas fa-bullhorn me-1"></span>
+    <strong>{{ errMessage }}</strong>
+    <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</ng-template>
+
+<div class="row"  *ngIf="vehicles; else errors">
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+              <tr>
+                <th class="border-bottom" scope="col">Regestration Number</th>
+                <th class="border-bottom" scope="col">Brand</th>
+                <th class="border-bottom" scope="col">Model</th>
+                <th class="border-bottom" scope="col">Fiscale Power</th>
+                <th class="border-bottom" scope="col">Owner infos</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let v of vehicles">
+                <th class="fw-bolder text-black">{{v.regestrationNumber| slice:0:15 }}</th>
+                <td class="fw-bolder text-black">{{v.brand}}</td>
+                <td class="fw-bolder text-black">{{v.model}}</td>
+                <td class="fw-bolder text-black">{{v.fiscalPower}} </td>
+                <td class="fw-bolder text-black">
+                  <a (click)="showOwner(v)" data-bs-toggle="tooltip" title="Show Owner" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-vcard-fill" viewBox="0 0 16 16">
+                      <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5ZM9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8Zm1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5Zm-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96c.026-.163.04-.33.04-.5ZM7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0Z"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+
+              </tbody>
+            </table>
+            <nav aria-label="Page navigation example" class="m-3">
+              <ul class="pagination pagination-sm">
+                <li class="page-item">
+                  <a (click)="previousPage()" aria-label="Previous" class="page-link">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <p class="page-link">Page {{ currentPage + 1 }} of {{ totalPages }}</p>
+                <li class="page-item">
+                  <a (click)="nextPage()" aria-label="Next" class="page-link">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+  </div>
+  <div *ngIf="isOwnerInfoVisible" >
+    <div class="modal" tabindex="-1" id="exampleModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Owner Informations</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <b class="text-primary">Full Name : </b><br/>
+            <b>  {{ selectedVehicleOwner.name }} </b><br/><br/>
+            <b class="text-primary">Email : </b><br/>
+            <b>{{ selectedVehicleOwner.email }}</b><br/><br/>
+            <b class="text-primary">Birth Date : </b><br/>
+              <b>{{ selectedVehicleOwner.birthDate | date:'yyyy-MM-dd' }}</b>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

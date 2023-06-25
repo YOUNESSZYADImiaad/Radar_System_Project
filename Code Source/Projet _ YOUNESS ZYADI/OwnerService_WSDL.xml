@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://soap.web.Immatriculationservice.miaad.ma/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="OwnerWS" targetNamespace="http://soap.web.Immatriculationservice.miaad.ma/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://soap.web.Immatriculationservice.miaad.ma/" elementFormDefault="unqualified" targetNamespace="http://soap.web.Immatriculationservice.miaad.ma/" version="1.0">
+
+  <xs:element name="getOwnerById" type="tns:getOwnerById"/>
+
+  <xs:element name="getOwnerByIdResponse" type="tns:getOwnerByIdResponse"/>
+
+  <xs:element name="getOwners" type="tns:getOwners"/>
+
+  <xs:element name="getOwnersResponse" type="tns:getOwnersResponse"/>
+
+  <xs:complexType name="getOwnerById">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getOwnerByIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:owner"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="owner">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="birthDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="id" type="xs:long"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="vehicles" nillable="true" type="tns:vehicle"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vehicle">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="brand" type="xs:string"/>
+      <xs:element minOccurs="0" name="fiscalPower" type="xs:double"/>
+      <xs:element minOccurs="0" name="id" type="xs:long"/>
+      <xs:element minOccurs="0" name="model" type="xs:string"/>
+      <xs:element minOccurs="0" name="owner" type="tns:owner"/>
+      <xs:element minOccurs="0" name="regestrationNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getOwners">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getOwnersResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:owner"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getOwners">
+    <wsdl:part element="tns:getOwners" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getOwnerById">
+    <wsdl:part element="tns:getOwnerById" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getOwnerByIdResponse">
+    <wsdl:part element="tns:getOwnerByIdResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getOwnersResponse">
+    <wsdl:part element="tns:getOwnersResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="OwnerSoapService">
+    <wsdl:operation name="getOwnerById">
+      <wsdl:input message="tns:getOwnerById" name="getOwnerById">
+    </wsdl:input>
+      <wsdl:output message="tns:getOwnerByIdResponse" name="getOwnerByIdResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOwners">
+      <wsdl:input message="tns:getOwners" name="getOwners">
+    </wsdl:input>
+      <wsdl:output message="tns:getOwnersResponse" name="getOwnersResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OwnerWSSoapBinding" type="tns:OwnerSoapService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getOwnerById">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getOwnerById">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getOwnerByIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOwners">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getOwners">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getOwnersResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OwnerWS">
+    <wsdl:port binding="tns:OwnerWSSoapBinding" name="OwnerSoapServicePort">
+      <soap:address location="http://localhost:8081/soap/owService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
